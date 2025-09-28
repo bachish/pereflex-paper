@@ -34,7 +34,8 @@ yaroslav.vorobev-2015@mail.ru}
 Saint-Petersburg, Russia \\
 gregra@mail.ru}
 
-% \authorand
+\linebreakand
+
 \IEEEauthorblockN{Daria Vasina}
 \IEEEauthorblockA{
 \textit{ITMO University}\\
@@ -56,7 +57,7 @@ s.v.grigoriev@spbu.ru}
 
 \begin{abstract}
 
-Error recovery is a critical component of parsing technology, particularly in applications such as IDE and compilers, where a single syntax error should not prevent further analysis of the input. This paper presents PereFlex --- a tool for extensive experimental evaluation of error recovery in JVM-based parsers. Our evaluation is based on a real-world parsers for Java and users erroneous programs. The results demonstrate that while some strategies are fast, they often fail to provide meaningful recovery, whereas advanced methods offer better recovery quality at the cost of increased computational overhead. This work contributes to a deeper understanding of error recovery mechanisms and provides practical insights for parser developers.
+Error recovery is a critical component of parsing technology, particularly in applications such as IDE and compilers, where a single syntax error should not prevent further analysis of the input. This paper presents PereFlex --- a tool for extensive experimental evaluation of error recovery in JVM-based parsers. Our evaluation is based on a real-world parsers for Java and users erroneous programs. The results demonstrate that while some strategies are fast, they often fail to provide meaningful recovery, whereas advanced methods offer better recovery quality at the cost of increased computational overhead.
 
 \end{abstract}
 
@@ -130,7 +131,8 @@ The most straightforward way to evaluate recovery performance and memory consump
 In some cases, performance measurement can be  further refined. For instance, if recovery is a distinct module  within a parsing algorithm, its execution time can be measured separately~\cite{panic}. However, this is only applicable to parsers with dedicated recovery modules.
 
 \subsection{JVM-specific aspects of evaluation}
-Benchmarking on a virtual machine platform like the JVM requires compliance with specific best practices~\cite{bench}.
+In this study, we analyze the performance of the JVM (Java Virtual Machine). Our methodology is based on ``Pro.NET Benchmarking''~\cite{bench}, which provides an approach to experiment design, statistical analysis, and bias mitigation that can be applied to any virtual machine.
+
 
 \begin{itemize}
     \item \textbf{Use release builds with optimizations}: this ensures that benchmarks reflect real-world tool performance.
