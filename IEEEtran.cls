@@ -4713,7 +4713,11 @@ between column types.}%
 % end the line and do the optional spacer
 \def\@@@IEEEauthorhaligncr[#1]{\ifnum0=`{\fi}\cr\noalign{\vskip#1\relax}}
 
-
+\newcommand{\linebreakand}{
+\end{@IEEEauthorhalign}
+\hfill\mbox{}\par
+\mbox{}\hfill\begin{@IEEEauthorhalign}
+}
 
 % flag to prevent multiple \and warning messages
 \newif\if@IEEEWARNand

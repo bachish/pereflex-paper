@@ -1,6 +1,5 @@
 \documentclass[conference]{IEEEtran}
-\IEEEoverridecommandlockouts
-% The preceding line is only needed to identify funding in the first footnote. If that is unneeded, please comment it out.
+\IEEEoverridecommandlockouts% The preceding line is only needed to identify funding in the first footnote. If that is unneeded, please comment it out.
 \usepackage{cite}
 \usepackage{amsmath,amssymb,amsfonts}
 \usepackage{algorithmic}
@@ -9,11 +8,6 @@
 \usepackage{xcolor}
 \usepackage{hyperref}
 \usepackage[inkscapeformat=png]{svg}
-\newcommand{\linebreakand}{%
-  \end{@IEEEauthorhalign}
-  \hfill\mbox{}\par
-  \mbox{}\hfill\begin{@IEEEauthorhalign}
-}
 
 \def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
     T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
@@ -39,9 +33,8 @@ yaroslav.vorobev-2015@mail.ru}
 \textit{ITMO University}\\
 Saint-Petersburg, Russia \\
 gregra@mail.ru}
-\linebreakand
-%\and <------------------------ REMOVED
-\IEEEauthorblockN{Daria Vasina}
+
+\linebreakand\IEEEauthorblockN{Daria Vasina}
 \IEEEauthorblockA{
 \textit{ITMO University}\\
 Saint-Petersburg, Russia \\
@@ -62,7 +55,7 @@ s.v.grigoriev@spbu.ru}
 
 \begin{abstract}
 
-Error recovery is a critical component of parsing technology, particularly in applications such as IDE and compilers, where a single syntax error should not prevent further analysis of the input. This paper presents PereFlex --- a tool for extensive experimental evaluation of error recovery in JVM-based parsers. Our evaluation is based on a real-world parsers for Java and users erroneous programs. The results demonstrate that while some strategies are fast, they often fail to provide meaningful recovery, whereas advanced methods offer better recovery quality at the cost of increased computational overhead. This work contributes to a deeper understanding of error recovery mechanisms and provides practical insights for parser developers.
+Error recovery is a critical component of parsing technology, particularly in applications such as IDE and compilers, where a single syntax error should not prevent further analysis of the input. This paper presents PereFlex --- a tool for extensive experimental evaluation of error recovery in JVM-based parsers. Our evaluation is based on a real-world parsers for Java and users erroneous programs. The results demonstrate that while some strategies are fast, they often fail to provide meaningful recovery, whereas advanced methods offer better recovery quality at the cost of increased computational overhead.
 
 \end{abstract}
 
@@ -109,7 +102,7 @@ The central question in quality assessment is how closely the recovered input ma
 \begin{enumerate}
     \item The simplest approach involves \textbf{manual evaluation}~\cite{forward-move, natural_recovery}. However, this method is time-consuming and prone to subjective bias. Additionally, developers may be influenced by error-messages output from the tools used during verification~\cite{panic}. Despite its limitations, manual inspection remains valuable method, particularly in cases where no baseline file with corrected errors is available. 
     
-    To enhance precision, some studies classify recovery quality using coarse categories such as "excellent," "good," and "poor"~\cite{forward-move}. 
+    To enhance precision, some studies classify recovery quality using coarse categories such as ``excellent'', ``good'', and ``poor''~\cite{forward-move}. 
     However, this classification lacks granularity and does not allow detailed analysis.
 
     \item \textbf{AST comparison} assesses structural similarity between recovered and expected syntax trees~\cite{natural_recovery, fuzz_recovery}. This method is accurate but sensitive to AST format differences and parser-specific representations. This method also requires a dataset with reference recovered code to compare trees in same format.
@@ -136,7 +129,8 @@ The most straightforward way to evaluate recovery performance and memory consump
 In some cases, performance measurement can be  further refined. For instance, if recovery is a distinct module  within a parsing algorithm, its execution time can be measured separately~\cite{panic}. However, this is only applicable to parsers with dedicated recovery modules.
 
 \subsection{JVM-specific aspects of evaluation}
-Benchmarking on a virtual machine platform like the JVM requires compliance with specific best practices~\cite{bench}.
+In this study, we analyze the performance of the JVM (Java Virtual Machine). Our methodology is based on ``Pro.NET Benchmarking''~\cite{bench}, which provides an approach to experiment design, statistical analysis, and bias mitigation that can be applied to any virtual machine.
+
 
 \begin{itemize}
     \item \textbf{Use release builds with optimizations}: this ensures that benchmarks reflect real-world tool performance.
@@ -155,15 +149,15 @@ In summary, a tool for reliable parser evaluation on the JVM requires awareness 
 
 
 \section{Error recovery analysis tool for JVM platform}
-PereFlex provides an efficient and structured way to benchmark error recovery capabilities across different parsers on the JVM. It operates as a console application, enabling users to evaluate multiple parsers for different programming languages with precise control over execution parameters.
+PereFlex provides an efficient and structured way to benchmark error recovery capabilities across different parsers on the JVM.\@
+It operates as a console application, enabling users to evaluate multiple parsers for different programming languages with precise control over execution parameters.
 
 \subsection{System Architecture}
-The high-level architecture of the benchmarking tool consists of the following key components shown in Figure ~\ref{fig:architecture}.
+The high-level architecture of the benchmarking tool consists of the following key components shown in Figure~\ref{fig:architecture}.
 
 \begin{figure*}[htbp]
 \includesvg[scale=0.46]{data/tool.svg}
-\caption{High-level architecture of the benchmarking tool.}
-\label{fig:architecture}
+\caption{High-level architecture of the benchmarking tool.}\label{fig:architecture}
 \end{figure*}
 
 \begin{itemize}
@@ -213,7 +207,7 @@ We design experiments to address the following research questions.
 \subsection{Evaluation Metrics}
 In this study, we adopt \textbf{edit distance} and \textbf{error type distribution} as the principal evaluation metrics. 
 
-The \textbf{edit distance} (\texttt{ED}) is zero for identical code; however, in our approach, we invert this metric so that the similarity score equals zero if the token sequences are completely different \eqref{eq}.
+The \textbf{edit distance} (\texttt{ED}) is zero for identical code; however, in our approach, we invert this metric so that the similarity score equals zero if the token sequences are completely different~\eqref{eq}.
 
 \begin{equation}
  1 - \left( \frac{\text{ED}(\text{original}, \text{recovered})}{\max(|\text{original}|, |\text{recovered}|)} \right)\label{eq}
@@ -250,12 +244,11 @@ To support a custom JVM-based parser, it is necessary to implement these methods
 \end{itemize}
 
 
-In approbation purposes, we analyzed the parsing speed for each parser on the BlackBox dataset. The evaluation results are shown in Figure \ref{fig:fig-speed}. This demonstrates that our tool enables researchers to compare different parsers in a benchmarking ecosystem with minimal overheads.
+In approbation purposes, we analyzed the parsing speed for each parser on the BlackBox dataset. The evaluation results are shown in Figure~\ref{fig:fig-speed}. This demonstrates that our tool enables researchers to compare different parsers in a benchmarking ecosystem with minimal overheads.
 
 \begin{figure}[htbp]
-\includesvg[scale=0.23]{data/time.svg}
-\caption{Parsing time measurement on the BlackBox dataset.}
-\label{fig:fig-speed}
+\includesvg[scale=0.21]{data/time.svg}
+\caption{Parsing time measurement on the BlackBox dataset.}\label{fig:fig-speed}
 \end{figure}
 
 \section{Evaluation}
@@ -268,37 +261,29 @@ To assess the impact of parsing implementation on error detection quality, we co
 
 \begin{figure}[htbp]
 \includesvg[scale=0.22]{data/errors.svg}
-\caption{Missing error distribution in comparing with javac.}
-\label{fig:error_distribution}
+\caption{Missing error distribution in comparing with javac.}\label{fig:error_distribution}
 \end{figure}
 
-\begin{figure}[htbp]
-\includesvg[scale=0.22]{data/errors.svg}
-\caption{Missing error distribution in comparing with javac.}
-\label{fig:error_distribution}
-\end{figure}
+The results reveal differences in error detection effectiveness. The most notable finding is the variation in the number of missed errors, particularly for common syntax issues such as \texttt{not a statement} and most common Java error\cite{error-frequence} \texttt{`;' expected}. Tree-sitter, for instance, exhibits a high rate of missed \texttt{variable declaration not allowed here} and \texttt{class, interface, enum, or record expected}  errors, indicating its limitations in handling incorrect declarations. ANTLR-Java and ANTLR-Java8-spec, while similar in parsing algorithm, show discrepancies in handling punctuation-related errors such as missing colons and parentheses. JDT, by contrast, appears to have more balanced performance but still misses certain structural errors.
 
-The results reveal differences in error detection effectiveness. The most notable finding is the variation in the number of missed errors, particularly for common syntax issues such as \texttt{not a statement} and most common Java error\cite{error-frequence} \texttt{';' expected}. Tree-sitter, for instance, exhibits a high rate of missed \texttt{variable declaration not allowed here} and \texttt{class, interface, enum, or record expected}  errors, indicating its limitations in handling incorrect declarations. ANTLR-Java and ANTLR-Java8-spec, while similar in parsing algorithm, show discrepancies in handling punctuation-related errors such as missing colons and parentheses. JDT, by contrast, appears to have more balanced performance but still misses certain structural errors.
-
-These differences suggest that parsing strategies play a crucial role in error detection quality. Parsers optimized for flexibility, such as Tree-sitter or Antlr-java, may allow faster parsing but at the cost of missing critical syntactic violations. Conversely, stricter parsers such as ANTLR-Java8-spec can enforce the Java grammar more rigorously, but as we can see in Figure \ref{fig:fig-speed}, they may struggle with parsing performance.
+These differences suggest that parsing strategies play a crucial role in error detection quality. Parsers optimized for flexibility, such as Tree-sitter or Antlr-java, may allow faster parsing but at the cost of missing critical syntactic violations. Conversely, stricter parsers such as ANTLR-Java8-spec can enforce the Java grammar more rigorously, but as we can see in Figure~\ref{fig:fig-speed}, they may struggle with parsing performance.
 
 
 In summary, the choice of parsing implementation directly affects error detection quality. The trade-off between strictness and recovery flexibility determines whether a parser will correctly diagnose syntax issues or silently fail to recognize them. 
 
 \textbf{RQ2:} Does similarity score reflect the quality of error recovery?  
 
-The similarity score, based on edit distance, measures how closely the recovered code matches the original input. We measured this metric using a BlackBox dataset to evaluate error recovery, as shown in Figure \ref{fig:sim}. To better understand the quality of the similarity score, we compared its results with other metrics, such as performance and error distribution. 
+The similarity score, based on edit distance, measures how closely the recovered code matches the original input. We measured this metric using a BlackBox dataset to evaluate error recovery, as shown in Figure~\ref{fig:sim}. To better understand the quality of the similarity score, we compared its results with other metrics, such as performance and error distribution. 
 
 \begin{figure}[htbp]
 \includesvg[scale=0.285]{data/sim_1.svg}
 \includesvg[scale=0.285]{data/sim_2.svg}
-\caption{Similarity score for Blackbox dataset.}
-\label{fig:sim}
+\caption{Similarity score for Blackbox dataset.}\label{fig:sim}
 \end{figure}
 
 Our analysis showed that although the similarity score provides a useful quantification, it does not always reflect the true quality of error recovery.
 \begin{itemize}
-    \item \textbf{ANTLR-Java} and \textbf{Tree-sitter} show high similarity scores, but they tend to miss many syntax errors, as seen in Figure \ref{fig:error_distribution}. Their outputs look close to the original, yet they often fail to identify and correct issues.
+    \item \textbf{ANTLR-Java} and \textbf{Tree-sitter} show high similarity scores, but they tend to miss many syntax errors, as seen in Figure~\ref{fig:error_distribution}. Their outputs look close to the original, yet they often fail to identify and correct issues.
     
     \item \textbf{JDT-JLS21} has lower similarity scores because it carefully prunes incorrect subtrees during recovery. This leads to more edits but ensures that invalid constructs are not preserved.
     
@@ -310,7 +295,7 @@ In conclusion, while the similarity score alone is not sufficient to assess reco
 
 \section*{Conclusion}
 
-In this work, we surveyed and analyzed existing approaches to measuring error recovery quality in parsers. To support subset of this analysis, we developed an open-source tool that enables researchers to evaluate both performance and recovery quality benchmarks for any JVM-based parser. The tool features an extensible architecture, allowing additional benchmarks and data analysis modules to be integrated using a consistent API.
+In this work, we surveyed and analyzed existing approaches to measuring error recovery quality in parsers. To support subset of this analysis, we developed an open-source tool that enables researchers to evaluate both performance and recovery quality benchmarks for any JVM-based parser. The tool features an extensible architecture, allowing additional benchmarks and data analysis modules to be integrated using a consistent API.\@
 
 Using this framework, we evaluated a real-world parser on actual erroneous user input. Our results demonstrate that parser recovery quality cannot be fully understood using a single metric alone. Instead, a comprehensive analysis across multiple metrics is necessary to draw meaningful conclusions.
 
